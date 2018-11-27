@@ -7,10 +7,15 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
   <h2>
-  	Tuote: {{product}}
+  	Tuote: {{productNumber}} : {{productName}}
   </h2>
   <p>
   <button ion-button (click)="readProduct()">Lue tuote</button>
+  <ion-label>Tuotenumero</ion-label>
+  <ion-input type="number" [(ngModel)]="productNumber" name="productNumber"></ion-input>
+  <ion-label>Tuotteen nimi</ion-label>
+  <ion-input [(ngModel)]="productNameInitials" (ionChange)="onProductNameUpdated()" name="productName"></ion-input>
+
+
 </ion-content>
