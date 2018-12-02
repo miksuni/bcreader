@@ -7,15 +7,33 @@
 </ion-header>
 
 <ion-content padding>
-  <h2>
-  	Tuote: {{productNumber}} : {{productName}}
-  </h2>
+  <h3>
+  	Tuotenumero: {{productNumber}}
+  </h3>
+  <p>
+  <h3>
+    Nimi: {{productName}}
+  </h3>
+  <p>
+  <h3>
+    Hinta: {{price}}
+  </h3>
+  <p>
+  <h3>
+    Varastosaldo: {{amountInStock}} {{inProductionInfo}}
+  </h3>
+  <p>
+  <button ion-button (click)="saveProducts()">Tallenna tuote</button>
   <p>
   <button ion-button (click)="readProduct()">Lue tuote</button>
   <ion-label>Tuotenumero</ion-label>
-  <ion-input type="number" [(ngModel)]="productNumber" name="productNumber"></ion-input>
+  <ion-input type="number" [(ngModel)]="productNumberInitials" (ionChange)="onProductNumberUpdated()" name="productNumber"></ion-input>
   <ion-label>Tuotteen nimi</ion-label>
   <ion-input [(ngModel)]="productNameInitials" (ionChange)="onProductNameUpdated()" name="productName"></ion-input>
-
+  <ion-list>
+    <ion-item text-wrap *ngFor="let element of searchResult" (click)="onProductSelected(element.Tuote)" >      
+      <p>{{element.Tuote}}</p>
+    </ion-item>
+  </ion-list>
 
 </ion-content>
