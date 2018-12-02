@@ -27,13 +27,11 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, private barcodeScanner: BarcodeScanner, public productList: ProductList, public httpClient: HttpClient, public restProvider: RestProvider) {
     console.log('>> home.constructor');
-    this.getProductInfo();
   }
 
   init() {
     console.log('>> home.init');
     console.log(this.productList.getProductList());
-    //console.log(this.productList.getTestObj());
   }
 
   saveProducts() {
@@ -42,18 +40,6 @@ export class HomePage {
     for (var i = 0; i < productCount; i++) {
       this.restProvider.addProduct(this.productList.getProductByIndex(i));
     }
-  }
-
-  getProductInfo() {
-    console.log('>> home.getProductInfo');
-    this.restProvider.productInfo("").then((result:any) => {
-      this.productInfoStr = result.result;
-      console.log(">> productInfo as string: " + this.productInfoStr);
-      //this.productInfo = JSON.parse(this.productInfoStr);
-      //console.log(">> exercises as object: " + this.productInfo);
-    }, (err) => {
-      console.log(err);
-    });
   }
 
   readProduct() {
@@ -77,7 +63,7 @@ export class HomePage {
     console.log('>> json: ' + JSON.stringify(found));
     if (found.length == 1) {
       console.log('>> found item: ' + found[0].Tuote);
-      this.productName = found[0].Tuote;
+      this.productName = found[0].productName;
       this.productNumber = found[0].ISBN;
     }
   }
@@ -101,10 +87,10 @@ export class HomePage {
 
   showProduct(productInfo) {
       this.productNumber = productInfo.ISBN;
-      this.productName = productInfo.Tuote;
-      this.price = productInfo.Hinta;
-      this.amountInStock = productInfo.Kpl;
-      if (productInfo.Poistunut == "T") {
+      this.productName = productInfo.productName;
+      this.price = productInfo.price;
+      this.amountInStock = productInfo.amountInStock;
+      if (!productInfo.availableFromPublisher) {
         this.inProductionInfo = "Poistunut tuote";
       }
       console.log('>> ' + JSON.stringify(productInfo));
