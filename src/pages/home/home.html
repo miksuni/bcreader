@@ -31,8 +31,8 @@
   <ion-label>Tuotteen nimi</ion-label>
   <ion-input [(ngModel)]="productNameInitials" (ionChange)="onProductNameUpdated()" name="productName"></ion-input>
   <ion-list>
-    <ion-item text-wrap *ngFor="let element of searchResult" (click)="onProductSelected(element.Tuote)" >      
-      <p>{{element.Tuote}}</p>
+    <ion-item text-wrap *ngFor="let element of searchResult; let i = index" (click)="onProductSelected(element.productName, i)" >      
+      <p>{{element.productName}}</p>
     </ion-item>
   </ion-list>
 

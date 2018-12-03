@@ -18,7 +18,8 @@ export class HomePage {
   price: string = "";
   amountInStock: string = "";
   inProductionInfo: string = "";
-  searchResult = [];
+  //searchResult = []; //*-* Chrome
+  searchResult: any; //*-* Android
 
   productInfoStr: any;
   //productInfo = {ISBN:'',Tuotenro:'',Tuote:'',Kpl:'',Hinta:''};
@@ -36,10 +37,10 @@ export class HomePage {
 
   saveProducts() {
     console.log('>> home.saveProducts');
-    var productCount = this.productList.getProductCount();
-    for (var i = 0; i < productCount; i++) {
-      this.restProvider.addProduct(this.productList.getProductByIndex(i));
-    }
+    //var productCount = this.productList.getProductCount();
+    //for (var i = 0; i < productCount; i++) {
+    //  this.restProvider.addProduct(this.productList.getProductByIndex(i));
+    //}
   }
 
   readProduct() {
@@ -59,9 +60,9 @@ export class HomePage {
     console.log('>> home.onProductNumberUpdated: ' + this.productNameInitials);
     var found = this.productList.getProductByNumber(this.productNameInitials);
     this.searchResult = found;
-    console.log('>> found: ' + found.length);
+    //console.log('>> found: ' + found.length);
     console.log('>> json: ' + JSON.stringify(found));
-    if (found.length == 1) {
+    if (this.searchResult.length == 1) {
       console.log('>> found item: ' + found[0].Tuote);
       this.productName = found[0].productName;
       this.productNumber = found[0].ISBN;
@@ -74,15 +75,23 @@ export class HomePage {
     this.searchResult = found;
     console.log('>> found: ' + found.length);
     console.log('>> json: ' + JSON.stringify(found));
+    this.clear();
     if (found.length == 1) {
-      console.log('>> found item: ' + found[0].Tuote);
+      console.log('>> found item: ' + found[0].productName);
       this.showProduct(found[0]);
     }
   }
 
-  onProductSelected(productName) {
-    console.log('>> home.onProductSelected: ' + productName);
-    this.productName = productName;
+  onProductSelected(productName, index) {
+    console.log('>> home.onProductSelected: ' + productName + ' index: ' + index);
+    //this.productName = productName;
+    this.productNumber = this.searchResult[index].ISBN;
+    this.productName = this.searchResult[index].productName;
+    this.price = this.searchResult[index].price;
+    this.amountInStock = this.searchResult[index].amountInStock;
+    if (!this.searchResult[index].availableFromPublisher) {
+      this.inProductionInfo = "Poistunut tuote";
+    }
   }
 
   showProduct(productInfo) {
@@ -97,6 +106,7 @@ export class HomePage {
   }
 
   clear() {
+    this.productNumber = "";
     this.productName = "";
     this.price = "";
     this.amountInStock = "";
