@@ -37,38 +37,40 @@ export class ProductList {
     	});
   	}
 
-	getProductList() {
-		console.log('>> ProductList.getProductList');
-		//console.log(JSON.stringify(this.productList));
-		//return this.produtList;
-		return 'ok';
-	}
-
 	getProductByNumber(isbnNumber) {
-		/*console.log('>> ProductList.getProductByNumber');
-		for (var i = 0; i < this.productList.length; i++) {
-			if (isbnNumber == this.productList[i].ISBN.replace(/-/g,'')) {
+		for (var i = 0; i < this.productInfo.length; i++) {
+			if (isbnNumber == this.productInfo[i].ISBN.replace(/-/g,'')) {
 				console.log('>> found');
-				return this.productList[i];
+				return this.productInfo[i];
 			}
-		}
-		return this.emptyProduct;*/
+ 		}
+		return this.emptyProduct;
 	}
 
-	getProductNumber(digits) {
-		/*console.log('>> ProductList.getProductNumber');
+
+	getProductProgressivelyByNumber(letters) {
+		if (letters.length == 0) {
+			return this.nullProduct;
+		}
+		console.log('>> ProductList.getProductByNumber');
 		var results = [];
-		for (var i = 0; i < this.productList.length; i++) {
-			if (this.productList[i].Tuote.toLowerCase().startsWith(letters.toLowerCase())) {
+		//console.log('>> LEN ' + this.productInfo.length);
+		for (var i = 0; i < this.productInfo.length; i++) {
+			if (this.productInfo[i].ISBN.replace(/-/g,'').startsWith(letters)) {
 				console.log('>> candicate found');
-				results.push(this.productList[i]);
+				console.log('>> ISBN: ' + this.productInfo[i].ISBN);
+				console.log('>> product code: ' + this.productInfo[i].ISBN.replace(/-/g,''));
+				results.push(this.productInfo[i]);
 			}
 		}
-		return results;*/
+		return results;
 	}
 
 	getProductByName(letters) {
-		console.log('>> ProductList.getProductName');
+		if (letters.length == 0) {
+			return this.nullProduct;
+		}
+		console.log('>> ProductList.getProductByName');
 		var results = [];
 		//console.log('>> LEN ' + this.productInfo.length);
 		for (var i = 0; i < this.productInfo.length; i++) {

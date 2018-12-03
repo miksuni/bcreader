@@ -1,35 +1,36 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Julkaisumyynnin varastonhallinta
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  <h3>
+  <h5>
   	Tuotenumero: {{productNumber}}
-  </h3>
+  </h5>
   <p>
   <h3>
     Nimi: {{productName}}
   </h3>
   <p>
   <h3>
-    Hinta: {{price}}
+    Hinta: {{price}} €
   </h3>
   <p>
-  <h3>
-    Varastosaldo: {{amountInStock}} {{inProductionInfo}}
-  </h3>
-  <p>
+  <h5>
+    Varastosaldo: {{amountInStock}} <font color="red">{{inProductionInfo}}</font>
+  </h5>
+  <!--
   <button ion-button (click)="saveProducts()">Tallenna tuote</button>
+  -->
   <p>
-  <button ion-button (click)="readProduct()">Lue tuote</button>
-  <ion-label>Tuotenumero</ion-label>
-  <ion-input type="number" [(ngModel)]="productNumberInitials" (ionChange)="onProductNumberUpdated()" name="productNumber"></ion-input>
-  <ion-label>Tuotteen nimi</ion-label>
-  <ion-input [(ngModel)]="productNameInitials" (ionChange)="onProductNameUpdated()" name="productName"></ion-input>
+  <button ion-button full round (click)="readProduct()">Lue tuote</button>
+  <p>
+  <ion-input type="number" class="product_data_input" [(ngModel)]="productNumberInitials" placeholder="Tuotenumero" (ionChange)="onProductNumberUpdated()" name="productNumber"></ion-input>
+  <p>
+  <ion-input class="product_data_input" [(ngModel)]="productNameInitials" placeholder="Tuotteen nimi" (ionChange)="onProductNameUpdated()" name="productName"></ion-input>
   <ion-list>
     <ion-item text-wrap *ngFor="let element of searchResult; let i = index" (click)="onProductSelected(element.productName, i)" >      
       <p>{{element.productName}}</p>

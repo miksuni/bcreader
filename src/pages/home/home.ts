@@ -30,11 +30,6 @@ export class HomePage {
     console.log('>> home.constructor');
   }
 
-  init() {
-    console.log('>> home.init');
-    console.log(this.productList.getProductList());
-  }
-
   saveProducts() {
     console.log('>> home.saveProducts');
     //var productCount = this.productList.getProductCount();
@@ -45,8 +40,7 @@ export class HomePage {
 
   readProduct() {
     console.log('>> home.readProduct');
-    this.init();
-
+    this.clear();
     this.barcodeScanner.scan().then(barcodeData => {
       console.log('Barcode data', barcodeData);
       this.productNumber = barcodeData.text;
@@ -57,15 +51,15 @@ export class HomePage {
   }
 
   onProductNumberUpdated() {
-    console.log('>> home.onProductNumberUpdated: ' + this.productNameInitials);
-    var found = this.productList.getProductByNumber(this.productNameInitials);
+    console.log('>> home.onProductNumberUpdated: ' + this.productNumberInitials);
+    var found = this.productList.getProductProgressivelyByNumber(this.productNumberInitials);
     this.searchResult = found;
-    //console.log('>> found: ' + found.length);
+    console.log('>> found: ' + found.length);
     console.log('>> json: ' + JSON.stringify(found));
+    this.clear();
     if (this.searchResult.length == 1) {
-      console.log('>> found item: ' + found[0].Tuote);
-      this.productName = found[0].productName;
-      this.productNumber = found[0].ISBN;
+      console.log('>> found item: ' + found[0].productName);
+      this.showProduct(found[0]);
     }
   }
 
@@ -90,7 +84,9 @@ export class HomePage {
     this.price = this.searchResult[index].price;
     this.amountInStock = this.searchResult[index].amountInStock;
     if (!this.searchResult[index].availableFromPublisher) {
-      this.inProductionInfo = "Poistunut tuote";
+      this.inProductionInfo = "(Poistunut tuote)";
+    } else {
+      this.inProductionInfo = "";
     }
   }
 
@@ -100,7 +96,9 @@ export class HomePage {
       this.price = productInfo.price;
       this.amountInStock = productInfo.amountInStock;
       if (!productInfo.availableFromPublisher) {
-        this.inProductionInfo = "Poistunut tuote";
+        this.inProductionInfo = "(Poistunut tuote)";
+      } else {
+        this.inProductionInfo = "";
       }
       console.log('>> ' + JSON.stringify(productInfo));
   }
